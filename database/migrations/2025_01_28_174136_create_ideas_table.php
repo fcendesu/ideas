@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('content');
             $table->integer('likes')->default(0);
             $table->timestamps(); //created_at, updated_at
