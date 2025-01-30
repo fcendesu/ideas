@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Hash;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -28,5 +29,37 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Account created successfully!');
+    }
+
+    public function login()
+    {
+        return view('auth.login');
+    }
+
+    public function authenticate()
+    {
+        $validated = request()->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:1|max:255',
+        ]);
+
+        if (auth()->attempt($validated)) {
+            request()->session()->regenerate();
+            return redirect()->route('dashboard')->with('success', 'Account loged in successfully!');
+        }
+
+        return redirect()
+            ->route('login')
+            ->withErrors(['email' => 'No matching user found.']);
+    }
+
+    public function Logout()
+    {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('dashboard')->with('success', 'Loged out successfully!');
+
     }
 }
