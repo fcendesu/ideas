@@ -18,6 +18,8 @@ Route::resource('ideas.comments', CommentController::class)->only(['store'])->mi
 //Route::post('/{idea}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 
 Route::resource('users', UserController::class)->only(['show', 'edit', 'update'])->middleware('auth');
+Route::get('profile', [UserController::class, 'profile'])->name('profile')->middleware('auth');
+
 
 /*old way routing*/
 /*Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
