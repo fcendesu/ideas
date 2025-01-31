@@ -5,8 +5,8 @@
             @method('put')
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
-                    <img style="width:150px" class="me-3 avatar-sm rounded-circle"
-                        src="{{$user->getImageUrl()}}" alt="Mario Avatar">
+                    <img style="width:150px" class="me-3 avatar-sm rounded-circle" src="{{ $user->getImageUrl() }}"
+                        alt="Mario Avatar">
                     <div>
 
                         <input name="name" value="{{ $user->name }}" type="text" class="form-control">
@@ -40,7 +40,7 @@
                 <h5 class="fs-5"> Bio : </h5>
 
                 <div class="mb-3">
-                    <textarea name="bio" class="form-control" id="bio" rows="3">{{$user->bio}}</textarea>
+                    <textarea name="bio" class="form-control" id="bio" rows="3">{{ $user->bio }}</textarea>
                     @error('bio')
                         <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
                     @enderror
@@ -57,13 +57,7 @@
                         </span> {{ $user->comments()->count() }} </a>
                 </div>
 
-                @auth
-                    @if (Auth::user()->id !== $user->id)
-                        <div class="mt-3">
-                            <button class="btn btn-primary btn-sm"> Follow </button>
-                        </div>
-                    @endif
-                @endauth
+
             </div>
         </form>
     </div>
