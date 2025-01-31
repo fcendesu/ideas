@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Storage;
 
 class UserController extends Controller
 {
@@ -33,6 +34,12 @@ class UserController extends Controller
             'bio' => 'min:3|max:255|nullable',
             'image' => 'image',
         ]);
+
+        if (request('image')) {
+            $validated['image'] = request()->file('image')->store('profile', 'public');
+
+            Storage::disk('public')->delete($user->image);
+        }
 
         $user->update($validated);
         return redirect()->route('profile');

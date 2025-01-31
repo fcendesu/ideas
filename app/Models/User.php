@@ -17,23 +17,14 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'bio',
-        'image',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'bio', 'image', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the attributes that should be cast.
@@ -56,5 +47,14 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function getImageUrl()
+    {
+        if ($this->image) {
+            return url('storage/' . $this->image);
+        }
+
+        return 'https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario';
     }
 }
